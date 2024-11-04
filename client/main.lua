@@ -39,6 +39,9 @@ ESX.SecureNetEvent("esx:setJob", function(job, lastJob)
         Job.info = {}
         Job.active = false
         Blips:Remove("depot")
+        if Job.point then
+            Job.point:remove()
+        end
     end
 end)
 
@@ -60,6 +63,9 @@ ESX.SecureNetEvent("esx:onPlayerLogout", function()
     Job.info = {}
     Job.active = false
     Blips:Remove("depot")
+    if Job.point then
+        Job.point:remove()
+    end
 end)
 
 ESX.SecureNetEvent('esx_truckingjob:DropOff', function(point)
