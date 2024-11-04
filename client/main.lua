@@ -27,9 +27,7 @@ ESX.SecureNetEvent('esx_truckingjob:DoneCheck', function(check)
 end)
 
 ESX.SecureNetEvent("esx:setJob", function(job, lastJob)
-    if job.name == "trucker" then
-        Job:Init()
-    elseif lastJob.name == "trucker" then
+    if lastJob.name == "trucker" then
         if Job.info.job then
             if Job.info.owner == ESX.serverId then
                 TriggerServerEvent("esx_truckingjob:EndJob")
@@ -45,12 +43,12 @@ ESX.SecureNetEvent("esx:setJob", function(job, lastJob)
             Job.point:remove()
         end
     end
+
+    Job:Init(job.name)
 end)
 
 ESX.SecureNetEvent('esx:playerLoaded', function(userData)
-    if userData.job.name == "trucker" then
-        Job:Init()
-    end
+    Job:Init(userData.job.name)
 end)
 
 ESX.SecureNetEvent("esx:onPlayerLogout", function()
@@ -176,5 +174,11 @@ AddEventHandler("onResourceStop", function(resource)
         if Job.active then
             Job:HideUI()
         end
+    end
+end)
+
+CreateThread(function()
+    if ESX.playerLoaded then
+        Job:Init(ESX.PlayerData.job.name)
     end
 end)

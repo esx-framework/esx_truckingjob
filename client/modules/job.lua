@@ -360,7 +360,11 @@ function Job:Cleanup()
     Blips:Remove("truck")
 end
 
-function Job:Init()
+function Job:Init(job)
+    if job ~= "trucker" then
+        return
+    end
+
     Blips:Depot()
     self:Point()
 end
