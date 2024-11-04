@@ -86,25 +86,30 @@ end)
 
 
 RegisterNetEvent('esx_truckingjob:ReturnVehicle', function()
+    local source = source
     GroupHandle:ReturnVehicle(source)
 end)
 
 RegisterNetEvent('esx_truckingjob:FinishDropOff', function()
+    local source = source
     GroupHandle:Dropoff(source)
 end)
 
 RegisterNetEvent('esx_truckingjob:EndJob', function()
+    local source = source
     GroupHandle:SendEvent(source, "esx_truckingjob:End")
     GroupHandle:RemoveVehicles(source)
     GroupHandle:Delete(source)
 end)
 
 RegisterNetEvent('esx_truckingjob:LeaveJob', function()
+    local source = source
     TriggerClientEvent("esx_truckingjob:End", source)
     GroupHandle:Kick(source)
 end)
 
 RegisterNetEvent('esx_truckingjob:penality', function(type)
+    local source = source
     GroupHandle:Penality(source, type)
 end)
 
