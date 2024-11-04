@@ -76,7 +76,7 @@ Config.deliveryTypes = {
         allowedVehicles = {"mule"},
         types = {"general"},
         trailers = false,
-        rewards = {cashMin = 100, cashMax = 200, xp = 1000},
+        rewards = {cashMin = 200, cashMax = 500, xp = 700},
         maxDrops = 3,
         xp = 0
     },
@@ -84,7 +84,7 @@ Config.deliveryTypes = {
         allowedVehicles = {"hauler", "packer", "phantom", "phantom3"},
         types = {"general", "industrial"},
         trailers = {"trailers", "trailers2", "trailers3", "trailers4", "trailerlogs", "trailers5", "graintrailer", "tvtrailer2", "tvtrailer"},
-        rewards = {cashMin = 500, cashMax = 1000, xp = 1000},
+        rewards = {cashMin = 500, cashMax = 1500, xp = 1000},
         maxDrops = 3,
         xp = 5000
     },
@@ -93,13 +93,13 @@ Config.deliveryTypes = {
         types = {"industrial", "fuel"},
         maxDrops = 3,
         trailers = {"tanker", "tanker2"},
-        rewards = {cashMin = 1000, cashMax = 2000, xp = 1500},
+        rewards = {cashMin = 1500, cashMax = 2000, xp = 1500},
         xp = 10000
     },
     cars = {
         allowedVehicles = {"packer", "phantom", "phantom3"},
         types = {"general", "industrial", "cars"},
-        rewards = {cashMin = 2000, cashMax = 4000, xp = 1500},
+        rewards = {cashMin = 2000, cashMax = 2500, xp = 1700},
         trailers = {"boattrailer2", "boattrailer3", "tr3", "tr4"},
         maxDrops = 2,
         xp = 30000
@@ -107,10 +107,34 @@ Config.deliveryTypes = {
     millitary = {
         allowedVehicles = {"phantom", "phantom3"},
         types = {"industrial","fuel", "cars", "millitary"},
-        rewards = {cashMin = 4000, cashMax = 6000, xp = 1500},
+        rewards = {cashMin = 2500, cashMax = 3000, xp = 1500},
         trailers = {"armytanker", "armytrailer2", "trailerlarge"},
         maxDrops = 1,
         xp = 50000
+    }
+}
+
+
+Config.trucks = {
+    mule = {
+        label = "Mule",
+        xp = 0
+    },
+    hauler = {
+        label = "Hauler",
+        xp = 5742
+    },
+    packer = {
+        label = "Packer",
+        xp = 12578
+    },
+    phantom = {
+        label = "Phantom",
+        xp = 32596
+    },
+    phantom3 = {
+        label = "Phantom Custom",
+        xp = 55965
     }
 }
 
@@ -294,27 +318,3 @@ Config.pickupPoints = {
         vector4(-1546.1902, 2753.0972, 17.8250, 232.3705)
     }
 }
-
-Config.trucks = {
-    mule = {
-        label = "Mule",
-        xp = 0
-    },
-    hauler = {
-        label = "Hauler",
-        xp = 5000
-    },
-    packer = {
-        label = "Packer",
-        xp = 12000
-    },
-    phantom = {
-        label = "Phantom",
-        xp = 32000
-    },
-    phantom3 = {
-        label = "Phantom Custom",
-        xp = 55000
-    }
-}
-
