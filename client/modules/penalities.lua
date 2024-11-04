@@ -32,16 +32,11 @@ function Penalities:PauseHit(pause, automatic)
 end
 
 function Penalities:DamageTruck()
-    local truckHealth = GetVehicleEngineHealth(Job.veh)
+    local truckHealth = GetVehicleBodyHealth(Job.veh)
 
     if not self.hitPaused and not self.current.hitVehicle and truckHealth < self.lastTruckHealth then
-        local diff = self.lastTruckHealth - truckHealth
-        local percent = diff / 1000
-
-        if percent > 0.1 then
-            TriggerServerEvent("esx_truckingjob:penality", "damageTruck")
-            self.lastTruckHealth = truckHealth
-        end
+        TriggerServerEvent("esx_truckingjob:penality", "damageTruck")
+        self.lastTruckHealth = truckHealth
     end
 end
 
@@ -50,13 +45,8 @@ function Penalities:DamageTrailer()
         local trailerHealth = GetVehicleBodyHealth(Job.trailer)
 
         if not self.hitPaused and trailerHealth < self.lastTrailerHealth then
-            local diff = self.lastTrailerHealth - trailerHealth
-            local percent = diff / 1000
-
-            if percent > 0.1 then
-                TriggerServerEvent("esx_truckingjob:penality", "damageTrailer")
-                self.lastTrailerHealth = trailerHealth
-            end
+            TriggerServerEvent("esx_truckingjob:penality", "damageTrailer")
+            self.lastTrailerHealth = trailerHealth
         end
     end
 end

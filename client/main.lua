@@ -126,7 +126,7 @@ AddStateBagChangeHandler("DeliveryTruck", nil, function(bagName, _, value)
     end
 
     Job.veh = vehicle
-    Penalities.lastTruckHealth = GetVehicleEngineHealth(vehicle)
+    Penalities.lastTruckHealth = GetVehicleBodyHealth(vehicle)
     Blips:Truck()
     Job:DriverLoop()
 
