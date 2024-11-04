@@ -10,6 +10,8 @@ function Menu:Close()
     self.onOpen = nil
     self.onClose = nil
     self.currentType = nil
+    self.currentTruck = nil
+    self.Players = nil
 end
 
 function Menu:GetXP()
@@ -42,13 +44,8 @@ function Menu:VehicleSelection()
         }
 
         self.onOpen = function(menu, element)
-            local existing = Job.info.job and Job.info.job.type ~= nil
-            ESX.TriggerServerCallback("esx_truckingjob:CreateJob", function(success)
-                if success then
-                    Job.active = true
-                    self:Close()
-                end
-            end, self.currentType, element.value, existing)
+            self.currentTruck = element.value
+            self:InvitePlayer()
         end
 
         self.onClose = function(menu)
@@ -105,6 +102,66 @@ function Menu:SelectDelivery()
     self:Open()
 end
 
+function Menu:StartJob()
+    local existing = Job.info.job and Job.info.job.type ~= nil
+    ESX.TriggerServerCallback("esx_truckingjob:CreateJob", function(success)
+                if success then
+                    Job.active = true
+                    self:Close()
+                end
+    end, self.currentType, self.currentTruck, self.Players, existing)
+end
+
+function Menu:InvitePlayer()
+    local existing = Job.info.job and Job.info.job.type ~= nil
+    if existing then
+        self:StartJob()
+        self:Close()
+        return
+    end
+    ESX.TriggerServerCallback("esx_truckingjob:NearbyPlayers", function(players)
+        if #players == 0 then
+            ESX.ShowNotification(Translate("notifications_noPlayers"), "error")
+            self:StartJob()
+            self:Close()
+            return
+        end
+
+        self.elements = {
+            {
+                icon = "fas fa-truck-pickup",
+                title = Translate("menu_Invite"),
+                unselectable = true
+            },
+            {
+                icon = "fas fa-users-slash",
+                title = Translate("menu_invite_none"),
+                value = "none"
+            }
+        }
+
+        for i=1, #players do
+            self.elements[#self.elements+1] = {
+                icon = "fas fa-user",
+                title = players[i].name,
+                value = players[i].source
+            }
+        end
+
+        self.onOpen = function(menu, element)
+            self.Players = element.value
+            self:StartJob()
+            self:Close()
+        end
+
+        self.onClose = function(menu)
+            self:Close()
+        end
+
+        self:Open()
+    end)
+end
+
 function Menu:StartMenu()
     self.elements = {
         {
@@ -139,7 +196,7 @@ function Menu:StartMenu()
 
     self.onOpen = function(menu, element)
         if element.value == "start" then
-            Menu:SelectDelivery()
+            self:SelectDelivery()
         end
         if element.value == "end" then
             TriggerServerEvent("esx_truckingjob:EndJob")

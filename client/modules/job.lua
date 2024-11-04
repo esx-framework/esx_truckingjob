@@ -30,7 +30,7 @@ function Job:Point()
             Job.nearDepot = point.currentDistance <= 2.0
             
             if Job.nearDepot and not Job.textUI then
-                ESX.TextUI(Translate("interact", ESX.GetInteractKey(), Translate("textui_open")))
+                ESX.TextUI(Translate("textui_interact", ESX.GetInteractKey(), Translate("textui_open")))
                 Job.textUI = true
             else
                 if not Job.nearDepot and Job.textUI then
@@ -158,7 +158,7 @@ function Job:SafetyChecks()
                     end
                     if distance <= 1.0 then
                         if not Job.textUI then
-                            ESX.TextUI(Translate("interact", ESX.GetInteractKey(), Translate("textui_safety")))
+                            ESX.TextUI(Translate("textui_interact", ESX.GetInteractKey(), Translate("textui_safety")))
                             Job.textUI = true
                         end
                         if not self.nearCheck or self.nearNearestCheck ~= k then
@@ -305,7 +305,7 @@ function Job:VehicleReturn()
 
             if Job.nearReturn then
                 if not Job.textUI and self:IsOwner() then
-                    ESX.TextUI(Translate("interact", ESX.GetInteractKey(), Translate("textui_return")))
+                    ESX.TextUI(Translate("textui_interact", ESX.GetInteractKey(), Translate("textui_return")))
                     Job.textUI = true
                 end
             else

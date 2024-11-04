@@ -1,4 +1,4 @@
-ESX.RegisterServerCallback('esx_truckingjob:CreateJob', function(source, cb, type, vehicle, existing)
+ESX.RegisterServerCallback('esx_truckingjob:CreateJob', function(source, cb, type, vehicle, players, existing)
     local xPlayer = ESX.GetPlayerFromId(source)
     local xp = xPlayer.getMeta("trucking-xp") or 0
 
@@ -23,6 +23,10 @@ ESX.RegisterServerCallback('esx_truckingjob:CreateJob', function(source, cb, typ
 
    if not existing then
     GroupHandle:Create(source)
+
+    if players and players ~= "none" then
+        GroupHandle:Invite(source, players)
+    end
    end
 
    local group = GroupHandle:StartJob(source, type, vehicle)
@@ -140,6 +144,35 @@ RegisterNetEvent('esx_truckingjob:CreateTrailer', function()
     end)
 end)
 
+
+ESX.RegisterServerCallback('esx_truckingjob:NearbyPlayers', function(source, cb)
+    local sourcePed = GetPlayerPed(source)
+    local sourceCoords = GetEntityCoords(sourcePed)
+
+    local xPlayers = ESX.GetExtendedPlayers("job", "trucker")
+    local players = {}
+
+    for i=1, #xPlayers do
+        local xPlayer = xPlayers[i]
+        if xPlayer.source == source or GroupHandle:GetGroup(xPlayer.source) then
+            goto continue
+        end
+
+        local ped = GetPlayerPed(xPlayer.source)
+        local coords = GetEntityCoords(ped)
+        local distance = #(sourceCoords - coords)
+
+        if distance < 10.0 then
+            players[#players+1] = {
+                source = xPlayer.source,
+                name = xPlayer.name
+            }
+        end
+
+        :: continue ::
+    end
+    cb(players)
+end)
 CreateThread(function()
     while true do
         

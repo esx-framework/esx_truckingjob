@@ -70,7 +70,7 @@ function GroupHandle:SendNotification(player, message, type)
     if not group then
         return
     end
-    
+
     local owner = ESX.GetPlayerFromId(group.owner)
     owner.showNotification(message, type, 5000)
 
@@ -84,7 +84,7 @@ function GroupHandle:Invite(player, target)
     local group = self.Groups[player]
     if group then
         if not group.members[target] then
-            group.members[target] = true
+            self.Groups[player].members[target] = true
         end
     end
 end
