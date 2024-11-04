@@ -320,8 +320,8 @@ function GroupHandle:Penality(player, type)
     local Penality = Config.Penalities[type]
     if Penality then
         self.Groups[group.owner].job.penalties += Penality.penalty
-        self:SendNotification(group.owner, Translate("penalities_total", self.Groups[group.owner].job.penalties, "%"), "error")
-        self:SendNotification(group.owner, Translate("penalities_recieved", Penality.penalty, "%", Translate("penalties_" .. type)), "error")
+        self:SendNotification(group.owner, Translate("penalties_total", self.Groups[group.owner].job.penalties, "%"), "error")
+        self:SendNotification(group.owner, Translate("penalties_recieved", Penality.penalty, "%", Translate("penalties_" .. type)), "error")
     else
         error("Invalid Penality Type: " .. type)
     end
