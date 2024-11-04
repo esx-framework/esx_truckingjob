@@ -83,7 +83,7 @@ Config.deliveryTypes = {
     materials = {
         allowedVehicles = {"hauler", "packer", "phantom", "phantom3"},
         types = {"general", "industrial"},
-        trailers = {"trailers", "trailers2", "trailers3", "trailers4", "trailerlogs", "trailers5"},
+        trailers = {"trailers", "trailers2", "trailers3", "trailers4", "trailerlogs", "trailers5", "graintrailer", "tvtrailer2", "tvtrailer"},
         rewards = {cashMin = 500, cashMax = 1000, xp = 1000},
         maxDrops = 3,
         xp = 5000
@@ -98,13 +98,17 @@ Config.deliveryTypes = {
     },
     cars = {
         allowedVehicles = {"packer", "phantom", "phantom3"},
+        types = {"general", "industrial", "cars"},
         rewards = {cashMin = 2000, cashMax = 4000, xp = 1500},
-        maxDrops = 1,
+        trailers = {"boattrailer2", "boattrailer3", "tr3", "tr4"},
+        maxDrops = 2,
         xp = 30000
     },
     millitary = {
         allowedVehicles = {"phantom", "phantom3"},
+        types = {"industrial","fuel", "cars", "millitary"},
         rewards = {cashMin = 4000, cashMax = 6000, xp = 1500},
+        trailers = {"armytanker", "armytrailer2", "trailerlarge"},
         maxDrops = 1,
         xp = 50000
     }
@@ -192,6 +196,16 @@ Config.dropOffPoints = {
         vector4(1696.1781, 4935.7632, 42.0776, 215.8363),
         vector4(2129.1479, 4793.8809, 41.1267, 25.6923),
     },
+    cars = {
+        vector4(-11.7517, -1086.9609, 26.6708, 158.3828),
+        vector4(-776.7137, -1494.1279, 2.2929, 110.6574),
+        vector4(-1008.7917, -1758.9545, 6.5127, 142.1867),
+        vector4(-496.8737, -63.4013, 39.9473, 156.3864)
+    },
+    millitary = {
+        vector4(-2323.0359, 3396.2832, 30.6740, 235.2778),
+        vector4(1861.1392, 2712.1089, 45.9254, 23.7838)
+    }
 }
 
 Config.pickupPoints = {
@@ -269,7 +283,18 @@ Config.pickupPoints = {
         vector4(1911.5925, 4769.9575, 43.0708, 216.7153),
         vector4(-1705.2500, -923.2692, 7.6785, 119.6827)
     },
+    cars = {
+        vector4(-382.7495, -120.1703, 38.6880, 206.8268),
+        vector4(1177.8160, 2664.4656, 37.9308, 307.7213),
+        vector4(-1141.9561, -1980.4148, 13.1623, 231.0951),
+        vector4(119.0257, 6601.7153, 31.9958, 243.3205),
+        vector4(710.4653, -1080.8724, 22.3803, 356.2618)
+    },
+    millitary = {
+        vector4(-1546.1902, 2753.0972, 17.8250, 232.3705)
+    }
 }
+
 Config.trucks = {
     mule = {
         label = "Mule",
