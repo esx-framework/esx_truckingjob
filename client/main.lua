@@ -22,6 +22,8 @@ end)
 
 ESX.SecureNetEvent('esx_truckingjob:DoneCheck', function(check)
     Job.checks[check] = nil
+    Job.nearCheck = false
+    Job.nearNearestCheck = 0
 end)
 
 ESX.SecureNetEvent("esx:setJob", function(job, lastJob)

@@ -138,6 +138,8 @@ function Job:DriverLoop()
 end
 
 function Job:SafetyChecks()
+    self.nearCheck = false
+    self.nearNearestCheck = 0
     CreateThread(function()
         while self.checks do
             for k,v in pairs(self.checks) do
@@ -149,26 +151,23 @@ function Job:SafetyChecks()
                 if distance <= 10.0 then
                     DrawMarker(1, coords.x, coords.y, coords.z - 1.0, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 1.0, 1.0, 1.0, 255, 0, 0, 160, false, false, 2, false, nil, nil, false)
 
+                    if not self.nearCheck then
+                        if Job.textUI then
+                            self:HideUI()
+                        end
+                    end
                     if distance <= 1.0 then
                         if not Job.textUI then
-                            ESX.TextUI("Press [~b~E~s~] To Check")
+                            ESX.TextUI(("Press [~b~%s~s~] to perform check"):format(ESX.GetInteractKey()))
                             Job.textUI = true
                         end
-
-                        if IsControlJustPressed(0, 38) then
-                            TaskTurnPedToFaceEntity(ESX.PlayerData.ped, self.trailer, 1500)
-                            local scenario = Config.InspectScenarios[math.random(1, #Config.InspectScenarios)]
-                            ESX.Progressbar("Doing Safety Checks", 5000, {
-                                animation = {
-                                    type = "Scenario",
-                                    Scenario = scenario,
-                                },
-                                onFinish = function()
-                                    TriggerServerEvent("esx_truckingjob:Check", k)
-                                    Job:HideUI()
-                                end,
-                            })
+                        if not self.nearCheck or self.nearNearestCheck ~= k then
+                            self.nearCheck = true
+                            self.nearNearestCheck = k
                         end
+                    elseif self.nearNearestCheck == k then
+                        self.nearCheck = false
+                        self.nearNearestCheck = 0
                     end
                 end
             end
@@ -203,6 +202,8 @@ function Job:CleanupPickup()
 
     Penalities:PauseHit(false, false)
     self.checks = nil
+    self.nearCheck = false
+    self.nearestCheck = 0
     self:HideUI()
     if self:IsOwner() then
       self:DisableVehicle(false)
@@ -371,10 +372,27 @@ end, function()
     return Job.nearDepot
 end)
 
+ESX.ReigsterInteraction("do_safety_check", function ()
+    TaskTurnPedToFaceEntity(ESX.PlayerData.ped, Job.trailer, 1500)
+    local scenario = Config.InspectScenarios[math.random(1, #Config.InspectScenarios)]
+    ESX.Progressbar("Doing Safety Checks", 5000, {
+        animation = {
+            type = "Scenario",
+            Scenario = scenario,
+        },
+        onFinish = function()
+            TriggerServerEvent("esx_truckingjob:Check", Job.nearNearestCheck)
+            Job:HideUI()
+            Job.nearCheck = false
+            Job.nearestCheck = 0
+        end,
+    })
+end, function()
+    return Job.nearCheck and Job.nearNearestCheck ~= 0
+end)
+
 ESX.ReigsterInteraction("return_vehicle", function ()
     TriggerServerEvent("esx_truckingjob:ReturnVehicle")
 end, function()
     return Job.requiresReturn and Job.nearReturn and Job:IsOwner()
 end)
-
-
