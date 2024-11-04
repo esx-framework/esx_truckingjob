@@ -84,7 +84,6 @@ RegisterNetEvent('esx_truckingjob:Check', function(index)
     end
 end)
 
-
 RegisterNetEvent('esx_truckingjob:ReturnVehicle', function()
     local source = source
     GroupHandle:ReturnVehicle(source)
@@ -148,7 +147,6 @@ RegisterNetEvent('esx_truckingjob:CreateTrailer', function()
         Entity(veh).state:set("Trailer", source, true)
     end)
 end)
-
 
 ESX.RegisterServerCallback('esx_truckingjob:NearbyPlayers', function(source, cb)
     local sourcePed = GetPlayerPed(source)

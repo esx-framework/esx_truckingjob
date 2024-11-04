@@ -2,7 +2,7 @@ XP = {}
 
 function XP:Set(player, amount)
     local xPlayer = ESX.GetPlayerFromId(player)
-    xPlayer.setMeta("trucking-xp", 0)
+    xPlayer.setMeta("trucking-xp", amount)
 end
 
 function XP:Add(player, amount)
