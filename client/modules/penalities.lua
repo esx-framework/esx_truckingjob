@@ -55,7 +55,7 @@ end
 function Penalities:hitVehicle()
     local timeSince = GetTimeSincePlayerHitVehicle(ESX.playerId)
 
-    if not self.hitPaused and timeSince > 0 and timeSince < 100 then
+    if not self.hitPaused and timeSince > 0 and timeSince < 250 then
         if not self.current.hitVehicle then
             self.current.hitVehicle = true
             TriggerServerEvent("esx_truckingjob:penality", "hitVehicle")

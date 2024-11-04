@@ -83,7 +83,6 @@ function Job:CreatePickup()
                     if self:IsOwner() and not sent then
                         TriggerServerEvent("esx_truckingjob:PickedUp")
                         sent = true
-                        Penalities:PauseHit(false, false)
                     end
                 end
             else
@@ -133,7 +132,7 @@ function Job:DriverLoop()
                     Penalities:DamageTrailer()
                 end
             end
-            Wait(0)
+            Wait(200)
         end
     end)
 end
@@ -202,6 +201,7 @@ function Job:CleanupPickup()
     Blips:Remove("pickup")
     Blips:Trailer()
 
+    Penalities:PauseHit(false, false)
     self.checks = nil
     self:HideUI()
     if self:IsOwner() then
@@ -376,5 +376,3 @@ ESX.ReigsterInteraction("return_vehicle", function ()
 end, function()
     return Job.requiresReturn and Job.nearReturn and Job:IsOwner()
 end)
-
-
