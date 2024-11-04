@@ -178,7 +178,7 @@ AddEventHandler("onResourceStop", function(resource)
 end)
 
 CreateThread(function()
-    if ESX.playerLoaded then
+    if ESX.IsPlayerLoaded() then
         Job:Init(ESX.PlayerData.job.name)
     end
 end)
