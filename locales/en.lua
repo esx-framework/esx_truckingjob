@@ -46,6 +46,7 @@ Locales['en'] = {
   ["notifications_trailerDestroyed"] = "Your trailer has been destroyed",
   ["notifications_highwaySpeed"] = "Highway: Speed limit increased to %s MPH",
   ["notifications_citySpeed"] = "City: Speed limit decreased to %s MPH",
+  ["notifications_noPlayers"] = "Found no eligible players nearby, starting job",
 
   ["menu_current_xp"] = "Current XP: %s",
   ["menu_xp_required"] = "XP Required: %s",
@@ -53,6 +54,8 @@ Locales['en'] = {
   ["menu_select_vehicle"] = "Select Truck for %s Delivery",
   ["menu_title"] = "Trucking Job",
   ["menu_end"] = "End",
+  ["menu_Invite"] = "Add Player",
+  ["menu_invite_none"] = "None",
   ["menu_leave"] = "Leave",
   ["menu_start"] = "Start",
 
