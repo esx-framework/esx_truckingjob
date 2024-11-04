@@ -110,7 +110,7 @@ function GroupHandle:SelectPickup(type)
             pickups[#pickups+1] = point
         end
     end
-
+    math.randomseed(os.time())
     return pickups[math.random(1, #pickups)]
 end
 
@@ -127,6 +127,7 @@ function GroupHandle:SelectDropoff(type)
         end
     end
 
+    math.randomseed(os.time())
     return dropoffs[math.random(1, #dropoffs)]
 end
 
