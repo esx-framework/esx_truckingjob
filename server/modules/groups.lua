@@ -101,12 +101,13 @@ end
 function GroupHandle:SelectPickup(type)
     local deliveryInfo = Config.deliveryTypes[type]
     local pickups = {}
-    for i=1, #deliveryInfo.types do
-        local de = deliveryInfo.types[i]
-        local pickupPoints = Config.pickupPoints[de]
 
-        for a=1, #pickupPoints do
-            pickups[#pickups+1] = pickupPoints[a]
+    -- Note: Pairs loop used to add more randomisation to the pickup points
+    for _, curType in pairs(deliveryInfo.types) do
+        local pickupPoints = Config.pickupPoints[curType]
+
+        for _, point in pairs(pickupPoints) do
+            pickups[#pickups+1] = point
         end
     end
 
@@ -116,12 +117,13 @@ end
 function GroupHandle:SelectDropoff(type)
     local deliveryInfo = Config.deliveryTypes[type]
     local dropoffs = {}
-    for i=1, #deliveryInfo.types do
-        local de = deliveryInfo.types[i]
-        local dropOffPoints = Config.dropOffPoints[de]
 
-        for a=1, #dropOffPoints do
-            dropoffs[#dropoffs+1] = dropOffPoints[a]
+    -- Note: Pairs loop used to add more randomisation to the dropoff points
+    for _, curType in pairs(deliveryInfo.types) do
+        local dropOffPoints = Config.dropOffPoints[curType]
+
+        for _, point in pairs(dropOffPoints) do
+            dropoffs[#dropoffs+1] = point
         end
     end
 
