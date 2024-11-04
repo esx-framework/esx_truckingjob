@@ -140,7 +140,6 @@ end
 function Job:SafetyChecks()
     CreateThread(function()
         while self.checks do
-
             for k,v in pairs(self.checks) do
                 local coords = GetOffsetFromEntityInWorldCoords(self.trailer, v.x, v.y, v.z)
                 local plyCoords = GetEntityCoords(ESX.PlayerData.ped)
@@ -153,6 +152,7 @@ function Job:SafetyChecks()
                     if distance <= 1.0 then
                         if not Job.textUI then
                             ESX.TextUI("Press [~b~E~s~] To Check")
+                            Job.textUI = true
                         end
 
                         if IsControlJustPressed(0, 38) then
@@ -376,3 +376,5 @@ ESX.ReigsterInteraction("return_vehicle", function ()
 end, function()
     return Job.requiresReturn and Job.nearReturn and Job:IsOwner()
 end)
+
+
