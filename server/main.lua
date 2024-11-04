@@ -30,9 +30,8 @@ ESX.RegisterServerCallback('esx_truckingjob:CreateJob', function(source, cb, typ
 
    GroupHandle:SendEvent(source, "esx_truckingjob:GroupInfo", group)
 
-   local pural = group.job.drops > 1 and "deliveries" or "delivery"
-   GroupHandle:SendNotification(group.owner, ("You have %s %s on this route"):format(group.job.drops, pural), "info")
-   GroupHandle:SendNotification(group.owner, "First location has been marked", "info")
+   local pural = group.job.drops > 1 and Translate("notifications_deliveries") or Translate("notifications_delivery")
+   GroupHandle:SendNotification(group.owner, Translate("notifications_route", group.job.drops, pural), "info")
 
    cb(group ~= nil)
 end)
@@ -45,8 +44,8 @@ RegisterNetEvent('esx_truckingjob:PickedUp', function()
         return
     end
 
-    GroupHandle:SendNotification(group.owner, ("Trailer Attached"), "success")
-    GroupHandle:SendNotification(group.owner, ("Complete Safety Checks to continue"), "info")
+    GroupHandle:SendNotification(group.owner, Translate("notifications_attached"), "success")
+    GroupHandle:SendNotification(group.owner, Translate("notifications_safetyChecks"), "info")
     GroupHandle:SendEvent(source, "esx_truckingjob:StartChecks")
 end)
 
@@ -74,9 +73,9 @@ RegisterNetEvent('esx_truckingjob:Check', function(index)
         GroupHandle:SendEvent(source, "esx_truckingjob:DoneCheck", index)
 
         local current = GroupHandle.Groups[group.owner].job.safetyChecks
-        GroupHandle:SendNotification(group.owner, ("Check %s/%s completed"):format(current, #Config.safetyChecks), "success")
+        GroupHandle:SendNotification(group.owner, Translate("notifications_checkdone", current, #Config.safetyChecks), "success")
     else
-        GroupHandle:SendNotification(group.owner, ("Safety Checks Complete"), "success")
+        GroupHandle:SendNotification(group.owner, Translate("notifications_checksComplete"), "success")
         GroupHandle:StartDropoff(groupInfo.owner)
     end
 end)
@@ -152,19 +151,19 @@ CreateThread(function()
             if group.job.started then
                 local veh = NetworkGetEntityFromNetworkId(group.vehicleId)
                 if not DoesEntityExist(veh) or GetVehicleEngineHealth(veh) > 0 then
-                    GroupHandle:SendNotification(owner, "Your vehicle has been destroyed", "error")
-                    GroupHandle:SendEvent(source, "esx_truckingjob:End")
-                    GroupHandle:RemoveVehicles(source)
-                    GroupHandle:Delete(source)
+                    GroupHandle:SendNotification(owner, Translate("notifications_truckDestroyed"), "error")
+                    GroupHandle:SendEvent(owner, "esx_truckingjob:End")
+                    GroupHandle:RemoveVehicles(owner)
+                    GroupHandle:Delete(owner)
                 end
 
                 if group.trailer then
                     local trailer = NetworkGetEntityFromNetworkId(group.trailer)
                     if not DoesEntityExist(trailer) or GetVehicleEngineHealth(trailer) > 0 then
-                        GroupHandle:SendNotification(owner, "Your trailer has been destroyed", "error")
-                        GroupHandle:SendEvent(source, "esx_truckingjob:End")
-                        GroupHandle:RemoveVehicles(source)
-                        GroupHandle:Delete(source)
+                        GroupHandle:SendNotification(owner, Translate("notifications_trailerDestroyed"), "error")
+                        GroupHandle:SendEvent(owner, "esx_truckingjob:End")
+                        GroupHandle:RemoveVehicles(owner)
+                        GroupHandle:Delete(owner)
                     end
                 end
             end

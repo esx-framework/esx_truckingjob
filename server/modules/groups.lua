@@ -207,17 +207,17 @@ function GroupHandle:AddReward(player, cash, multiplayer)
 
     local owner = ESX.GetPlayerFromId(group.owner)
     owner.addMoney(cash)
-    owner.showNotification(("Recieved $%s from delivery"):format(cash), "success", 5000)
+    owner.showNotification(Translate("notifications_money_recieved", cash), "success", 5000)
 
     if multiplayer then
-        owner.showNotification("Recieved " .. Config.MultiplayerBonus .. "% Bonus for team-work", "success", 5000)
+        owner.showNotification(Translate("notifications_multiplayer", Config.MultiplayerBonus, "%"), "success", 5000)
 
         for k,_ in pairs(group.members) do
             local member = ESX.GetPlayerFromId(k)
             member.addMoney(cash)
 
-            member.showNotification("Recieved " .. Config.MultiplayerBonus .. "% Bonus for team-work", "success", 5000)
-            member.showNotification(("Recieved $%s from delivery"):format(cash), "success", 5000)
+            member.showNotification(Translate("notifications_multiplayer", Config.MultiplayerBonus, "%"), "success", 5000)
+            member.showNotification(Translate("notifications_money_recieved", cash), "success", 5000)
         end
     end
 end
@@ -232,14 +232,12 @@ function GroupHandle:RemoveReward(player, cash, multiplayer)
     local owner = ESX.GetPlayerFromId(group.owner)
     cash = -cash
     owner.removeMoney(cash)
-    owner.showNotification(("Paid the city $%s for wreckless driving"):format(cash), "error", 5000)
-    owner.showNotification("You have lost money on this delivery", "error", 5000)
+    owner.showNotification(Translate("notifications_money_lost", cash), "error", 5000)
     if multiplayer then
         for k,_ in pairs(group.members) do
             local member = ESX.GetPlayerFromId(k)
             member.removeMoney(cash)
-            member.showNotification(("Paid the city $%s for wreckless driving"):format(cash), "error", 5000)
-            member.showNotification("You have lost money on this delivery", "error", 5000)
+            member.showNotification(Translate("notifications_money_lost", cash), "error", 5000)
         end
     end
 end
@@ -266,7 +264,7 @@ function GroupHandle:Reward(player)
             XP:Add(k, xp)
         end
 
-        self:SendNotification(player, ("Recieved %s XP from delivery"):format(ESX.Math.GroupDigits(xp)), "success")
+        self:SendNotification(player, Translate("notifications_xp", ESX.Math.GroupDigits(xp)), "success")
     end
 end
 
@@ -297,13 +295,13 @@ function GroupHandle:Dropoff(player)
             self:SendEvent(player, "esx_truckingjob:NextLocation", dropoff, "dropoff")
         end
 
-        local pural = self.Groups[player].job.drops > 1 and "deliveries" or "delivery"
-        self:SendNotification(player, ("You have %s %s remaining"):format(group.job.drops, pural), "info")
+        local pural = self.Groups[player].job.drops > 1 and Translate("notifications_deliveries") or Translate("notifications_delivery")
+        self:SendNotification(player, Translate("notifications_remaining", group.job.drops, pural), "info")
     else
         self:Cleanup(player)
 
-        self:SendNotification(player, "All deliveries Complete", "success")
-        self:SendNotification(player, "Return vehicle to depot", "info")
+        self:SendNotification(player, Translate("notifications_complete"), "success")
+        self:SendNotification(player, Translate("notifications_return"), "info")
         self:SendEvent(player, "esx_truckingjob:ReturnToDept")
     end
     SetTimeout(9000, function()
@@ -322,8 +320,8 @@ function GroupHandle:Penality(player, type)
     local Penality = Config.Penalities[type]
     if Penality then
         self.Groups[group.owner].job.penalties += Penality.penalty
-        self:SendNotification(group.owner, "Total Penalties: " .. self.Groups[group.owner].job.penalties .. "%", "error")
-        self:SendNotification(group.owner, "Recieved a " .. Penality.penalty .. "% penality for " .. Penality.label, "error")
+        self:SendNotification(group.owner, Translate("penalities_total", self.Groups[group.owner].job.penalties, "%"), "error")
+        self:SendNotification(group.owner, Translate("penalities_recieved", Penality.penalty, "%", Translate("penalties_" .. type)), "error")
     else
         error("Invalid Penality Type: " .. type)
     end
@@ -339,7 +337,7 @@ function GroupHandle:StartDropoff(player)
     local dropoff = self:SelectDropoff(group.job.type)
     self.Groups[player].job.dropoff = dropoff
 
-    self:SendNotification(player, "Drop off point has been marked", "info")
+    self:SendNotification(player, Translate("notifications_dropoff"), "info")
     self:SendEvent(player, "esx_truckingjob:DropOff", dropoff)
 end
 

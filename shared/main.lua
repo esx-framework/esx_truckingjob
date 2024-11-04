@@ -39,37 +39,30 @@ Config.InspectScenarios = {"WORLD_HUMAN_SECURITY_SHINE_TORCH", "WORLD_HUMAN_CLIP
 Config.Penalities = {
     onPavement = {
         enabled = true,
-        label = "driving on Pavement",
         penalty = 4, -- % of total pay
     },
     ranRedLight = {
         enabled = true,
-        label = "running a red light",
         penalty = 6, -- % of total pay
     },
     hitVehicle = {
         enabled = true,
-        label = "hitting a vehicle",
         penalty = 5, -- % of total pay
     },
     againstTraffic = {
         enabled = true,
-        label = "drving against traffic",
         penalty = 2, -- % of total pay
     },
     damageTruck = {
         enabled = true,
-        label = "damaging the truck",
         penalty = 2, -- % of total pay
     },
     damageTrailer = {
         enabled = true,
-        label = "damaging the trailer",
         penalty = 2, -- % of total pay
     },
     speeding = {
         enabled = true,
-        label = "Speeding",
         limits = {
             city = 30,
             highway = 55
@@ -80,7 +73,6 @@ Config.Penalities = {
 
 Config.deliveryTypes = {
     food = {
-        label = "Food",
         allowedVehicles = {"mule"},
         types = {"general"},
         trailers = false,
@@ -89,7 +81,6 @@ Config.deliveryTypes = {
         xp = 0
     },
     materials = {
-        label = "Materials",
         allowedVehicles = {"hauler", "packer", "phantom", "phantom3"},
         types = {"general", "industrial"},
         trailers = {"trailers", "trailers2", "trailers3", "trailers4", "trailerlogs", "trailers5"},
@@ -98,7 +89,6 @@ Config.deliveryTypes = {
         xp = 5000
     },
     fuel = {
-        label = "Fuel",
         allowedVehicles = {"hauler", "packer", "phantom", "phantom3"},
         types = {"industrial", "fuel"},
         maxDrops = 3,
@@ -107,14 +97,12 @@ Config.deliveryTypes = {
         xp = 10000
     },
     cars = {
-        label = "Cars",
         allowedVehicles = {"packer", "phantom", "phantom3"},
         rewards = {cashMin = 2000, cashMax = 4000, xp = 1500},
         maxDrops = 1,
         xp = 30000
     },
     millitary = {
-        label = "Millitary",
         allowedVehicles = {"phantom", "phantom3"},
         rewards = {cashMin = 4000, cashMax = 6000, xp = 1500},
         maxDrops = 1,

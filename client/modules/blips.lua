@@ -10,7 +10,7 @@ function Blips:Pickup()
     SetBlipRoute(self.pickup, true)
 
     BeginTextCommandSetBlipName("STRING")
-    AddTextComponentSubstringPlayerName("Pickup Trailer")
+    AddTextComponentSubstringPlayerName(Translate("blips_pickup"))
     EndTextCommandSetBlipName(self.pickup)
 end
 
@@ -23,7 +23,7 @@ function Blips:DropOff()
     SetBlipRoute(self.dropoff, true)
 
     BeginTextCommandSetBlipName("STRING")
-    AddTextComponentSubstringPlayerName("Delivery Point")
+    AddTextComponentSubstringPlayerName(Translate("blips_dropoff"))
     EndTextCommandSetBlipName(self.dropoff)
 end
 
@@ -36,7 +36,7 @@ function Blips:VehicleReturn()
     SetBlipRoute(self.returns, true)
 
     BeginTextCommandSetBlipName("STRING")
-    AddTextComponentSubstringPlayerName("Return Vehicle")
+    AddTextComponentSubstringPlayerName(Translate("blips_return"))
     EndTextCommandSetBlipName(self.returns)
 end
 
@@ -45,6 +45,10 @@ function Blips:Trailer()
     SetBlipSprite(self.trailer, 479)
     SetBlipScale(self.trailer, 0.8)
     SetBlipColour(self.trailer, 0)
+
+    BeginTextCommandSetBlipName("STRING")
+    AddTextComponentSubstringPlayerName(Translate("blips_trailer"))
+    EndTextCommandSetBlipName(self.trailer)
 end
 
 function Blips:Truck()
@@ -52,9 +56,9 @@ function Blips:Truck()
     SetBlipSprite(self.truck, 477)
     SetBlipScale(self.truck, 0.8)
     SetBlipColour(self.truck, 0)
-
+    print(2)
     BeginTextCommandSetBlipName("STRING")
-    AddTextComponentSubstringPlayerName("Delivery Truck")
+    AddTextComponentSubstringPlayerName(Translate("blips_truck"))
     EndTextCommandSetBlipName(self.truck)
 end
 
@@ -70,7 +74,7 @@ function Blips:Depot()
     SetBlipAsShortRange(self.depot, settings.ShortRange)
 
     BeginTextCommandSetBlipName("STRING")
-    AddTextComponentSubstringPlayerName("Trucking Depot")
+    AddTextComponentSubstringPlayerName(Translate("blips_depot"))
     EndTextCommandSetBlipName(self.depot)
 end
 

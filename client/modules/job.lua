@@ -30,7 +30,7 @@ function Job:Point()
             Job.nearDepot = point.currentDistance <= 2.0
             
             if Job.nearDepot and not Job.textUI then
-                ESX.TextUI(("Press [~b~%s~s~] To Open Menu"):format(ESX.GetInteractKey()))
+                ESX.TextUI(Translate("interact", ESX.GetInteractKey(), Translate("textui_open")))
                 Job.textUI = true
             else
                 if not Job.nearDepot and Job.textUI then
@@ -67,7 +67,7 @@ function Job:CreatePickup()
             Job.nearPickup = point.currentDistance <= 20.0
             if Job.nearPickup then
                 if not Job.textUI then
-                    ESX.TextUI("Pick Up Trailer")
+                    ESX.TextUI(Translate("textui_pickup"))
                     Job.textUI = true
                     Penalities:PauseHit(true, false)
                 end
@@ -158,7 +158,7 @@ function Job:SafetyChecks()
                     end
                     if distance <= 1.0 then
                         if not Job.textUI then
-                            ESX.TextUI(("Press [~b~%s~s~] to perform check"):format(ESX.GetInteractKey()))
+                            ESX.TextUI(Translate("interact", ESX.GetInteractKey(), Translate("textui_safety")))
                             Job.textUI = true
                         end
                         if not self.nearCheck or self.nearNearestCheck ~= k then
@@ -213,14 +213,14 @@ end
 function Job:BasicDrop(done)
     if self:IsOwner() then
         if not Job.textUI then
-            ESX.TextUI("Press [E] to Deliver")
+            ESX.TextUI(Translate("textui_interact"), "E", Translate("textui_deliver"))
             Job.textUI = true
         end
 
         if IsControlJustPressed(0, 38) and not done then
             local time = math.random(5000, 10000)
             self:DisableVehicle(true)
-            ESX.Progressbar("Delivering Product", time, {freezePlayer = true})
+            ESX.Progressbar(Translate("progress_deliver"), time, {freezePlayer = true})
             Wait(time)
             self:DisableVehicle(false)
             TriggerServerEvent("esx_truckingjob:FinishDropOff")
@@ -232,7 +232,7 @@ end
 
 function Job:TralierDrop(done)
     if not Job.textUI then
-        ESX.TextUI("Detach Trailer")
+        ESX.TextUI(Translate("textui_detach"))
         Job.textUI = true
     end
     local attached = IsEntityAttachedToEntity(self.trailer, self.veh)
@@ -305,7 +305,7 @@ function Job:VehicleReturn()
 
             if Job.nearReturn then
                 if not Job.textUI and self:IsOwner() then
-                    ESX.TextUI(("Press [~b~%s~s~] To Return Vehicle"):format(ESX.GetInteractKey()))
+                    ESX.TextUI(Translate("interact", ESX.GetInteractKey(), Translate("textui_return")))
                     Job.textUI = true
                 end
             else
@@ -361,9 +361,7 @@ function Job:Cleanup()
 end
 
 function Job:Init(job)
-    if job ~= "trucker" then
-        return
-    end
+    if job ~= "trucker" then return end
 
     Blips:Depot()
     self:Point()
@@ -379,11 +377,12 @@ end)
 ESX.ReigsterInteraction("do_safety_check", function ()
     TaskTurnPedToFaceEntity(ESX.PlayerData.ped, Job.trailer, 1500)
     local scenario = Config.InspectScenarios[math.random(1, #Config.InspectScenarios)]
-    ESX.Progressbar("Doing Safety Checks", 5000, {
+    ESX.Progressbar(Translate("progress_safety"), math.random(4500, 7000), {
         animation = {
             type = "Scenario",
             Scenario = scenario,
         },
+        freezePlayer = true,
         onFinish = function()
             TriggerServerEvent("esx_truckingjob:Check", Job.nearNearestCheck)
             Job:HideUI()
@@ -400,3 +399,5 @@ ESX.ReigsterInteraction("return_vehicle", function ()
 end, function()
     return Job.requiresReturn and Job.nearReturn and Job:IsOwner()
 end)
+
+

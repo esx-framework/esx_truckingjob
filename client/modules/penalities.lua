@@ -114,9 +114,9 @@ function Penalities:HighwayChange(change)
     end)
 
     if change then
-        ESX.ShowNotification("Highway: Speed limit increased to " .. limits.highway .. " MPH", "success")
+        ESX.ShowNotification(Translate("notifications_highwaySpeed", limits.highway), "success")
     else
-        ESX.ShowNotification("City: Speed limit decreased to " .. limits.city .. " MPH", "error")
+        ESX.ShowNotification(Translate("notifications_citySpeed", limits.city), "error")
     end
 end
 

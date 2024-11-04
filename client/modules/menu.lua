@@ -18,12 +18,13 @@ end
 
 function Menu:VehicleSelection()
     local deliveryInfo = Config.deliveryTypes[self.currentType]
+    local label = Translate(("types_%s"):format(self.currentType))
 
     self.elements = {
         {
             icon = "fas fa-truck-pickup",
-            title = ("Select Vehicle for %s Delivery"):format(deliveryInfo.label),
-            description = ("Current XP: %s"):format(ESX.Math.GroupDigits(self:GetXP())),
+            title = Translate("menu_select_vehicle", label),
+            description = Translate("menu_current_xp", ESX.Math.GroupDigits(self:GetXP())),
             unselectable = true
         }
     }
@@ -35,7 +36,7 @@ function Menu:VehicleSelection()
         self.elements[#self.elements+1] = {
             icon = "fas fa-truck-pickup",
             title = vehicle.label,
-            description = ("XP: %s"):format(ESX.Math.GroupDigits(vehicle.xp)),
+            description = Translate("menu_xp_required", ESX.Math.GroupDigits(vehicle.xp)),
             unselectable = self:GetXP() < vehicle.xp,
             value = model
         }
@@ -62,8 +63,8 @@ function Menu:AddDeliveryOptions()
     local tempElements = {}
     for k,v in pairs(Config.deliveryTypes) do
         tempElements[#tempElements+1] = {
-            title = v.label,
-            description = ("XP: %s"):format(ESX.Math.GroupDigits(v.xp)),
+            title = Translate(("types_%s"):format(k)),
+            description = Translate("menu_xp_required", ESX.Math.GroupDigits(v.xp)),
             unselectable = self:GetXP() < v.xp,
             value = k,
             xp = v.xp
@@ -80,8 +81,8 @@ function Menu:SelectDelivery()
     self.elements = {
         {
             icon = "fas fa-box",
-            title = "Select Delivery Type",
-            description = ("Current XP: %s"):format(ESX.Math.GroupDigits(self:GetXP())),
+            title = Translate("menu_select_type"),
+            description = Translate("menu_current_xp", ESX.Math.GroupDigits(self:GetXP())),
             unselectable = true
         }
     }
@@ -108,8 +109,8 @@ function Menu:StartMenu()
     self.elements = {
         {
             icon = "fas fa-truck-pickup",
-            title = "Trucking Job",
-            description = ("Current XP: %s"):format(ESX.Math.GroupDigits(self:GetXP())),
+            title = Translate("menu_title"),
+            description = Translate("menu_current_xp", ESX.Math.GroupDigits(self:GetXP())),
             unselectable = true
         }
     }
@@ -118,20 +119,20 @@ function Menu:StartMenu()
         if Job:IsOwner() then
             self.elements[2] = {
                 icon = "fas fa-truck-loading",
-                title = "End",
+                title = Translate("menu_end"),
                 value = "end"
             }
         else
             self.elements[2] = {
                 icon = "fas fa-truck-loading",
-                title = "leave",
+                title = Translate("menu_leave"),
                 value = "leave"
             }
         end
     else
         self.elements[2] = {
             icon = "fas fa-truck-moving",
-            title = "Start",
+            title = Translate("menu_start"),
             value = "start"
         }
     end
