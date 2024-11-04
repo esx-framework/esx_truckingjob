@@ -86,7 +86,7 @@ Config.deliveryTypes = {
         trailers = {"trailers", "trailers2", "trailers3", "trailers4", "trailerlogs", "trailers5", "graintrailer", "tvtrailer2", "tvtrailer"},
         rewards = {cashMin = 500, cashMax = 1500, xp = 1000},
         maxDrops = 3,
-        xp = 5000
+        xp = 5214
     },
     fuel = {
         allowedVehicles = {"hauler", "packer", "phantom", "phantom3"},
@@ -94,7 +94,7 @@ Config.deliveryTypes = {
         maxDrops = 3,
         trailers = {"tanker", "tanker2"},
         rewards = {cashMin = 1500, cashMax = 2000, xp = 1500},
-        xp = 10000
+        xp = 11431
     },
     cars = {
         allowedVehicles = {"packer", "phantom", "phantom3"},
@@ -102,7 +102,7 @@ Config.deliveryTypes = {
         rewards = {cashMin = 2000, cashMax = 2500, xp = 1700},
         trailers = {"boattrailer2", "boattrailer3", "tr3", "tr4"},
         maxDrops = 2,
-        xp = 30000
+        xp = 31459
     },
     millitary = {
         allowedVehicles = {"phantom", "phantom3"},
@@ -110,7 +110,7 @@ Config.deliveryTypes = {
         rewards = {cashMin = 2500, cashMax = 3000, xp = 1500},
         trailers = {"armytanker", "armytrailer2", "trailerlarge"},
         maxDrops = 1,
-        xp = 50000
+        xp = 52553
     }
 }
 
