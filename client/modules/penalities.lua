@@ -5,6 +5,9 @@ Penalities.current = {}
 Penalities.onHighway = false
 Penalities.highwayChanged = false
 Penalities.htPaused = false
+Penalities.lastTruckHealth = 1000
+Penalities.lastTrailerHealth = 1000
+
 function Penalities:onPavement()
     local onPavement = IsPlayerDrivingDangerously(ESX.playerId, 0)
 
@@ -27,6 +30,37 @@ function Penalities:PauseHit(pause, automatic)
         end)
     end
 end
+
+function Penalities:DamageTruck()
+    local truckHealth = GetVehicleEngineHealth(Job.veh)
+
+    if not self.hitPaused and not self.current.hitVehicle and truckHealth < self.lastTruckHealth then
+        local diff = self.lastTruckHealth - truckHealth
+        local percent = diff / 1000
+
+        if percent > 0.1 then
+            TriggerServerEvent("esx_truckingjob:penality", "damageTruck")
+            self.lastTruckHealth = truckHealth
+        end
+    end
+end
+
+function Penalities:DamageTrailer()
+    if Job.trailer then
+        local trailerHealth = GetVehicleBodyHealth(Job.trailer)
+
+        if not self.hitPaused and trailerHealth < self.lastTrailerHealth then
+            local diff = self.lastTrailerHealth - trailerHealth
+            local percent = diff / 1000
+
+            if percent > 0.1 then
+                TriggerServerEvent("esx_truckingjob:penality", "damageTrailer")
+                self.lastTrailerHealth = trailerHealth
+            end
+        end
+    end
+end
+
 
 function Penalities:hitVehicle()
     local timeSince = GetTimeSincePlayerHitVehicle(ESX.playerId)

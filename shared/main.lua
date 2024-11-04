@@ -57,6 +57,16 @@ Config.Penalities = {
         label = "drving against traffic",
         penalty = 2, -- % of total pay
     },
+    damageTruck = {
+        enabled = true,
+        label = "damaging the truck",
+        penalty = 2, -- % of total pay
+    },
+    damageTrailer = {
+        enabled = true,
+        label = "damaging the trailer",
+        penalty = 2, -- % of total pay
+    },
     speeding = {
         enabled = true,
         label = "Speeding",

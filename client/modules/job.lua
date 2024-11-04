@@ -124,6 +124,14 @@ function Job:DriverLoop()
                 if penalities.againstTraffic.enabled then
                     Penalities:againstTraffic()
                 end
+
+                if penalities.damageTruck.enabled then
+                    Penalities:DamageTruck()
+                end
+
+                if penalities.damageTrailer.enabled then
+                    Penalities:DamageTrailer()
+                end
             end
             Wait(0)
         end
