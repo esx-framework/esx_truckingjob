@@ -1,3 +1,4 @@
+---@diagnostic disable: duplicate-set-field
 Menu = {}
 
 function Menu:Open()

@@ -14,21 +14,21 @@ function Job:Point()
     local pos = Config.jobPoint
     local marker = Config.markerSettings
 
-    self.point = ESX.CreatePoint({
+    self.point = ESX.Point:new({
         coords = pos,
         distance = marker.DrawDistance,
-        onEnter = function()
+        enter = function()
         end,
-        onExit = function()
+        leave = function()
             self:HideUI()
         end,
-        nearby = function(point)
+        inside = function(point)
             DrawMarker(marker.Type, point.coords.x, point.coords.y, point.coords.z, 0.0, 0.0, 0.0, 0, 0.0, 0.0, marker.Size.x, marker.Size.y,
             marker.Size.z, marker.Color.r, marker.Color.g, marker.Color.b, 160, true, false, 2, true, nil,
             nil, false)
 
-            Job.nearDepot = point.currentDistance <= 2.0
-            
+            Job.nearDepot = point.currDistance <= 2.0
+
             if Job.nearDepot and not Job.textUI then
                 ESX.TextUI(Translate("textui_interact", ESX.GetInteractKey(), Translate("textui_open")))
                 Job.textUI = true
@@ -52,19 +52,17 @@ function Job:CreatePickup()
     local sentForSpawn = false
     local coords = vector3(self.info.job.pickup.x, self.info.job.pickup.y, self.info.job.pickup.z)
 
-    self.pickupPoint = ESX.CreatePoint({
+    self.pickupPoint = ESX.Point:new({
         coords = coords,
         distance = 170.0,
-        onEnter = function()
+        enter = function()
             if self:IsOwner() and not self.trailer and not sentForSpawn then
                 TriggerServerEvent("esx_truckingjob:CreateTrailer")
                 sentForSpawn = true
             end
         end,
-        onExit = function()
-        end,
-        nearby = function(point)
-            Job.nearPickup = point.currentDistance <= 20.0
+        inside = function(point)
+            Job.nearPickup = point.currDistance <= 20.0
             if Job.nearPickup then
                 if not Job.textUI then
                     ESX.TextUI(Translate("textui_pickup"))
@@ -180,7 +178,7 @@ function Job:FinishDropoff()
     self:HideUI()
     Blips:Remove("dropoff")
     Blips:Remove("trailer")
-    self.dropoffPoint:remove()
+    self.dropoffPoint:delete()
 
     if self.trailer then
         Citizen.InvokeNative(0x2FA2494B47FDD009, self.trailer, false) -- SetTrailerAttachmentEnabled
@@ -257,17 +255,15 @@ function Job:CreateDropoff()
 
     local coords = vector3(self.info.job.dropoff.x, self.info.job.dropoff.y, self.info.job.dropoff.z)
     local done = false
-    self.dropoffPoint = ESX.CreatePoint({
+    self.dropoffPoint = ESX.Point:new({
         coords = coords,
         distance = 30.0,
-        onEnter = function()
-        end,
-        onExit = function()
+        leave = function()
             self:HideUI()
         end,
-        nearby = function(point)
+        inside = function(point)
             DrawMarker(1, coords.x, coords.y, coords.z - 1.0, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 8.0, 8.0, 8.0, 255, 0, 0, 160, false, false, 2, false, nil, nil, false)
-            Job.nearDropoff = point.currentDistance <= 10.0
+            Job.nearDropoff = point.currDistance <= 10.0
 
             if Job.nearDropoff then
                 if Config.deliveryTypes[Job.info.job.type].trailers then
@@ -291,17 +287,15 @@ function Job:VehicleReturn()
     Blips:VehicleReturn()
     self.requiresReturn = true
 
-    self.returnPoint = ESX.CreatePoint({
+    self.returnPoint = ESX.Point:new({
         coords = Config.returnCoords,
         distance = 30.0,
-        onEnter = function()
-        end,
-        onExit = function()
+        leave = function()
             self:HideUI()
         end,
-        nearby = function(point)
+        inside = function(point)
             DrawMarker(1, Config.returnCoords.x, Config.returnCoords.y, Config.returnCoords.z - 1.0, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 8.0, 8.0, 8.0, 255, 0, 0, 160, false, false, 2, false, nil, nil, false)
-            Job.nearReturn = point.currentDistance <= 10.0
+            Job.nearReturn = point.currDistance <= 10.0
 
             if Job.nearReturn then
                 if not Job.textUI and self:IsOwner() then
@@ -341,7 +335,7 @@ function Job:Cleanup()
     end
 
     if self.requiresReturn then
-        self.returnPoint:remove()
+        self.returnPoint:delete()
         self.requiresReturn = false
         self.returnPoint = nil
     end

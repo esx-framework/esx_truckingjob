@@ -12,7 +12,7 @@ end)
 ESX.SecureNetEvent('esx_truckingjob:StartChecks', function()
     SetBlipRoute(Blips.pickup, false)
 
-    Job.pickupPoint:remove()
+    Job.pickupPoint:delete()
     Job.pickupPoint = nil
     Job.nearPickup = false
 
@@ -40,7 +40,7 @@ ESX.SecureNetEvent("esx:setJob", function(job, lastJob)
         Job.active = false
         Blips:Remove("depot")
         if Job.point then
-            Job.point:remove()
+            Job.point:delete()
         end
     end
 
@@ -64,7 +64,7 @@ ESX.SecureNetEvent("esx:onPlayerLogout", function()
     Job.active = false
     Blips:Remove("depot")
     if Job.point then
-        Job.point:remove()
+        Job.point:delete()
     end
 end)
 
