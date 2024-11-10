@@ -367,14 +367,14 @@ function Job:Init(job)
     self:Point()
 end
 
-ESX.ReigsterInteraction("open_trucking_depot", function ()
+ESX.RegisterInteraction("open_trucking_depot", function ()
     Job.Active = true
     Menu:StartMenu()
 end, function()
     return Job.nearDepot
 end)
 
-ESX.ReigsterInteraction("do_safety_check", function ()
+ESX.RegisterInteraction("do_safety_check", function ()
     TaskTurnPedToFaceEntity(ESX.PlayerData.ped, Job.trailer, 1500)
     local scenario = Config.InspectScenarios[math.random(1, #Config.InspectScenarios)]
     ESX.Progressbar(Translate("progress_safety"), math.random(4500, 7000), {
@@ -394,7 +394,7 @@ end, function()
     return Job.nearCheck and Job.nearNearestCheck ~= 0
 end)
 
-ESX.ReigsterInteraction("return_vehicle", function ()
+ESX.RegisterInteraction("return_vehicle", function ()
     TriggerServerEvent("esx_truckingjob:ReturnVehicle")
 end, function()
     return Job.requiresReturn and Job.nearReturn and Job:IsOwner()

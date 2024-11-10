@@ -8,6 +8,8 @@ lua54 'yes'
 version "1.0.0"
 
 shared_scripts {
+	'@es_extended/locale.lua',
+	'locales/*.lua',
 	'@es_extended/imports.lua',
 	'shared/*.lua'
 }

@@ -1,13 +1,13 @@
 Menu = {}
 
 function Menu:Open()
-    ESX.OpenContext("left", self.elements, self.onOpen, self.onClose)
+    ESX.OpenContext("left", self.elements, self.onSelect, self.onClose)
 end
 
 function Menu:Close()
     ESX.CloseContext()
     self.elements = nil
-    self.onOpen = nil
+    self.onSelect = nil
     self.onClose = nil
     self.currentType = nil
     self.currentTruck = nil
@@ -43,7 +43,7 @@ function Menu:VehicleSelection()
             value = model
         }
 
-        self.onOpen = function(menu, element)
+        self.onSelect = function(menu, element)
             self.currentTruck = element.value
             self:InvitePlayer()
         end
@@ -90,7 +90,7 @@ function Menu:SelectDelivery()
         self.elements[#self.elements+1] = tempElements[i]
     end
 
-    self.onOpen = function(menu, element)
+    self.onSelect = function(menu, element)
         self.currentType = element.value
         self:VehicleSelection()
     end
@@ -148,7 +148,7 @@ function Menu:InvitePlayer()
             }
         end
 
-        self.onOpen = function(menu, element)
+        self.onSelect = function(menu, element)
             self.Players = element.value
             self:StartJob()
             self:Close()
@@ -194,7 +194,7 @@ function Menu:StartMenu()
         }
     end
 
-    self.onOpen = function(menu, element)
+    self.onSelect = function(menu, element)
         if element.value == "start" then
             self:SelectDelivery()
         end
